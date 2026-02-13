@@ -1,7 +1,13 @@
 const express = require("express");
 const fetch = require("node-fetch");
+const cors = require("cors");
 
 const app = express();
+
+app.use(cors({
+    origin: "https://electramod.vercel.app"
+}));
+
 app.use(express.json());
 
 const ROBOFLOW_KEY = process.env.ROBOFLOW_KEY;
@@ -32,6 +38,7 @@ app.post("/detect", async (req, res) => {
         });
 
     } catch (err) {
+        console.error(err);
         res.status(500).json({ error: "Detection failed" });
     }
 });
