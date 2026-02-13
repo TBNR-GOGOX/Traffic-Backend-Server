@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 
 const app = express();
 
-// Manual CORS headers
+// Manual CORS
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
@@ -16,7 +16,9 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.json());
+// Increase payload limit
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 const ROBOFLOW_KEY = process.env.ROBOFLOW_KEY;
 
